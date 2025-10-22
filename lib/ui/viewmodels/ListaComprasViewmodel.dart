@@ -16,6 +16,11 @@ class ListaComprasViewmodel extends ChangeNotifier{
     await loadListas();
   }
 
+  Future<void> updateLista(ListaCompras lista) async {
+    await _repository.updateLista(lista);
+    await loadListas();
+  }
+
   Future<void> deleteLista(int id) async {
     await _repository.deleteLista(id);
     await loadListas();

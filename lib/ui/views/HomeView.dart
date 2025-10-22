@@ -86,10 +86,28 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                    "Total: $total | Comprados: $comprados | Restantes: $restantes"),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () => vm.deleteLista(list.id!),
+                  "Total: $total | Comprados: $comprados | Restantes: $restantes",
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      tooltip: 'Editar lista',
+                      onPressed: () async {
+                        final novoNome = await _dialogEditarLista(context, list.nome);
+                        if (novoNome != null && novoNome.isNotEmpty) {
+                          list.nome = novoNome;
+                          await vm.updateLista(list);
+                        }
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      tooltip: 'Excluir lista',
+                      onPressed: () => vm.deleteLista(list.id!),
+                    ),
+                  ],
                 ),
                 onTap: () {
                   Navigator.push(
@@ -128,6 +146,30 @@ class HomeView extends StatelessWidget {
         content: TextField(
           controller: controller,
           decoration: const InputDecoration(labelText: 'Nome da lista'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, controller.text),
+            child: const Text('Salvar'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<String?> _dialogEditarLista(BuildContext context, String nomeAtual) async {
+    final controller = TextEditingController(text: nomeAtual);
+    return showDialog<String>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Editar lista'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(labelText: 'Novo nome da lista'),
         ),
         actions: [
           TextButton(
