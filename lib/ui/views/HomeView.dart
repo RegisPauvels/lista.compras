@@ -22,31 +22,34 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.list),
             tooltip: 'Itens por setores',
-            onPressed: () {
-              Navigator.push(
+            onPressed: () async {
+              await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const ItensPorSetorView()),
               );
+              await vm.loadListas();
             },
           ),
           IconButton(
             icon: const Icon(Icons.category),
             tooltip: 'Gerenciar Setores',
-            onPressed: () {
-              Navigator.push(
+            onPressed: () async {
+              await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const SetoresView()),
               );
+              await vm.loadListas();
             },
           ),
           IconButton(
             icon: const Icon(Icons.list_alt),
             tooltip: 'Ver todos os itens faltantes',
-            onPressed: () {
-              Navigator.push(
+            onPressed: () async {
+              await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const TodosItensView()),
               );
+              await vm.loadListas();
             },
           ),
         ],
@@ -95,7 +98,8 @@ class HomeView extends StatelessWidget {
                       icon: const Icon(Icons.edit),
                       tooltip: 'Editar lista',
                       onPressed: () async {
-                        final novoNome = await _dialogEditarLista(context, list.nome);
+                        final novoNome = await _dialogEditarLista(
+                            context, list.nome);
                         if (novoNome != null && novoNome.isNotEmpty) {
                           list.nome = novoNome;
                           await vm.updateLista(list);
@@ -105,12 +109,14 @@ class HomeView extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.delete),
                       tooltip: 'Excluir lista',
-                      onPressed: () => vm.deleteLista(list.id!),
+                      onPressed: () async {
+                        await vm.deleteLista(list.id!);
+                      },
                     ),
                   ],
                 ),
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => ItensCompraView(
@@ -119,6 +125,7 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   );
+                  await vm.loadListas();
                 },
               );
             },
@@ -129,7 +136,7 @@ class HomeView extends StatelessWidget {
         onPressed: () async {
           final nome = await _dialogNovaLista(context);
           if (nome != null && nome.isNotEmpty) {
-            vm.insertLista(nome);
+            await vm.insertLista(nome);
           }
         },
         child: const Icon(Icons.add),
@@ -161,7 +168,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Future<String?> _dialogEditarLista(BuildContext context, String nomeAtual) async {
+  Future<String?> _dialogEditarLista(
+      BuildContext context, String nomeAtual) async {
     final controller = TextEditingController(text: nomeAtual);
     return showDialog<String>(
       context: context,

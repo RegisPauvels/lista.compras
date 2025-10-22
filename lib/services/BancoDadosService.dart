@@ -29,6 +29,9 @@ class BancoDadosService{
       version: 5,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
+      onOpen: (db) async {
+        await db.execute('PRAGMA foreign_keys = ON');
+      },
     );
   }
 
@@ -38,6 +41,7 @@ class BancoDadosService{
       await db.execute('ALTER TABLE lista_compras ADD COLUMN createdAt INTEGER');
     }
   }
+
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
