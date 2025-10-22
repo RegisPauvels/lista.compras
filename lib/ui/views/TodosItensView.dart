@@ -44,7 +44,7 @@ class _TodosItensViewState extends State<TodosItensView> {
         item.nome,
         style: TextStyle(
           decoration: item.comprado ? TextDecoration.lineThrough : null,
-          color: item.comprado ? Colors.grey : Colors.black,
+          color: item.comprado ? Colors.grey : Colors.white,
         ),
       ),
       subtitle: Text('Lista: ${item.listaId} - Qtd: ${item.quantidade ?? 1}'),

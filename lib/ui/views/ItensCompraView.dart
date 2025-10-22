@@ -159,7 +159,7 @@ class _ItensCompraViewState extends State<ItensCompraView> {
                     style: TextStyle(
                       decoration:
                       item.comprado ? TextDecoration.lineThrough : TextDecoration.none,
-                      color: item.comprado ? Colors.grey : Colors.black,
+                      color: item.comprado ? Colors.grey : Colors.white,
                     ),
                   ),
                   subtitle: Text('Qtd: ${item.quantidade ?? 1}'),

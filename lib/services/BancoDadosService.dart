@@ -11,7 +11,7 @@ class BancoDadosService{
 
   Future<Database> get database async {
     if (_db != null) return _db!;
-    _db = await _initDB('shopping_app.db');
+    _db = await _initDB('compras_app.db');
     return _db!;
   }
 
