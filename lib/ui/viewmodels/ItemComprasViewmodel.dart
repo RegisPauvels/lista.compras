@@ -7,7 +7,7 @@ class ItemComprasViewmodel extends ChangeNotifier {
 
   List<ItemCompras> itens = [];
   bool carregando = false;
-  int setorSelecionadoId = -1; // -1 => todos
+  int setorSelecionadoId = -1;
 
 
   Future<void> loadItems(int listId) async {
